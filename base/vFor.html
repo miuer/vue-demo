@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo-list</title>
+    <script src="../vue/vue.js"></script>
+</head>
+
+<div id="app">
+
+    <!--遍历对象-->
+    <span v-for="(obj,key,index) in objs">{{obj}}--{{key}}--{{index}}</span>
+
+    <!-- 遍历对象数组-->
+    <div v-for="(obj,index) of objItems " v-bind:key=obj.id>
+        {{obj}} -- {{obj.name}}--{{obj.address}}--{{index}}
+    </div>
+
+    <!-- 消除外层 div
+         对数组进行操作 push pop shift unshift splice sort reverse
+    -->
+    <template v-for="(item,index) of items" v-for="(item,index) of items">
+        <div>{{item}}--{{index}}</div>
+        <span>{{item}}--{{index}}</span>
+
+    </template>
+
+
+
+</div>
+
+<script>
+
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            items: ["a", "b", "c"],
+            objs:
+            {
+                name: "miuer",
+                address: "ncepu"
+            },
+
+            objItems: [
+                {
+                    id: "001",
+                    name: "miuer",
+                    address: "ncepu",
+                },
+                {
+                    id: "002",
+                    name: "richard",
+                    address: "xx",
+                }
+            ]
+
+        }
+    })
+</script>
+
+<body>
+
+</body>
+
+</html>

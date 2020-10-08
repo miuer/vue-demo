@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>template</title>
+    <script src="../vue/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1 v-show="shower">hello world</h1>
+      <p v-show="!shower">hello world</p>
+
+      <button @click="change">click</button>
+    </div>
+
+    <script>
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          shower: false,
+        },
+        methods: {
+          change: function () {
+            this.shower = !this.shower;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello-Vue</title>
+    <script src="../vue/vue.js"></script>
+</head>
+
+<div id="app">
+    {{message}}
+</div>
+
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: "Hello World",
+        },
+    });
+
+    setTimeout(function () {
+        // vm.$data.message = "Hello Vue";
+        vm.message = "Hello Vue";
+    }, 2000)
+</script>
+
+<body>
+
+</body>
+
+</html>

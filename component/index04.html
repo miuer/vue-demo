@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index-04</title>
+    <script src="../vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- 同级组件之间传值使用 bus 或者vuex 实现-->
+        <child message="Miuer">子组件
+            <!-- 子组件中创建的组件不可用？ -->
+            <kid message="hello">子子组件
+            </kid>
+        </child>
+        <child message="Richard">兄弟组件</child>
+
+        <kid message="hello">同级组件</kid>
+
+        {{greet}}
+
+    </div>
+
+
+    <script>
+
+        Vue.prototype.bus = new Vue()
+
+        Vue.component(
+            "child",
+            {
+                props: {
+                    message: {
+                        type: String,
+                    }
+                },
+                data: function () {
+                    return {
+                        content: this.message,
+                    }
+                },
+                template: "<div @click='handlerClick'>{{content}}   <slot></slot> </div>",
+
+                methods: {
+                    handlerClick: function () {
+                        this.bus.$emit("change", this.content)
+                    }
+                },
+                mounted: function () {
+                    var This = this
+                    this.bus.$on("change", function (value) {
+                        This.content = value
+                    })
+                },
+            }
+        )
+
+        Vue.component(
+            "kid",
+            {
+                props: {
+                    message: {
+                        type: String,
+                    }
+                },
+                data: function () {
+                    return {
+                        content: this.message,
+                    }
+                },
+                template: "<div>{{content}}<slot></slot></div>",
+
+                mounted: function () {
+                    var This = this
+                    this.bus.$on("change", function (value) {
+                        This.content = value
+                    })
+                },
+            }
+        )
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                greet: "hello world",
+            },
+        })
+    </script>
+
+</body>
+
+</html>

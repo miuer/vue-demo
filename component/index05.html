@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index-05</title>
+    <script src="../vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- 
+        parentMsg 如果未初始化，子组件将无法成功获取值
+        -->
+        <input v-model="parentMsg">
+
+        <com :message="parentMsg"></com>
+
+    </div>
+
+
+    <script>
+
+        // var com = {
+        //     props: {
+        //         message: {
+        //             type: String,
+        //             // type: [Number, String],
+
+        //             // required: true,
+
+
+        //             //  default: "null",
+        //             // 对象或数组使用函数返回
+        //             // default: function () {
+        //             //     return {
+        //             //         message: "null"
+        //             //     }
+        //             // },
+
+        //             // validator: function (value) {
+        //             //     var len = value.length;
+        //             //     console.log(len)
+        //             //     //  return (len > 6)
+        //             // }
+        //             validator: function (value) {
+        //                    return ['hello', 'warning', 'danger'].indexOf(value) !== -1
+        //             }
+        //         }
+        //     },
+        //     template: "<div>{{message}}</div>"
+        // }
+
+
+        Vue.component("com", {
+            props: {
+                message: {
+                    type: String,
+                    validator: function (value) {
+                        return true;
+                    },
+                }
+            },
+            template: "<div>{{message}}</div>"
+
+        })
+
+        var vm = new Vue({
+            el: "#app",
+            // components: {
+            //     com: com,
+            // }
+            data: {
+                // error format: parentMsg,
+                parentMsg: ""
+            }
+        })
+    </script>
+
+</body>
+
+</html>

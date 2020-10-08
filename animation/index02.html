@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css动画</title>
+    <script src="../vue/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+    <style>
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0);
+            }
+
+            50% {
+                transform: scale(1.5);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .enter {
+            animation: bounce-in .5s;
+        }
+
+        .v-leave-active {
+            animation: bounce-in 1s reverse;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <!--
+            默认的 enter-active-class 指向 v-enter-active
+            可以使用 enter-active-class 指向指定 css
+        -->
+        <transition enter-active-class="enter" leave-active-class="v-leave-active">
+            <child v-if="show"></child>
+        </transition>
+
+
+        <!--
+            使用 x-class 使用 animate.css 动画
+        -->
+        <transition enter-active-class="animate__animated animate__shakeX"
+            leave-active-class="animate__animated animate__shakeY">
+            <div v-if="show">hello animation</div>
+        </transition>
+
+
+
+        <button @click="handlerBtnClick">Animation</button>
+    </div>
+
+
+    <script>
+        Vue.component(
+            "child", {
+            template: `<div>hello wolrd</div>`
+        }
+        )
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                show: true,
+            },
+            methods: {
+                handlerBtnClick: function () {
+                    this.show = !this.show;
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

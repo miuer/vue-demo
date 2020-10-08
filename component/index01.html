@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index-01</title>
+    <script src="../vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <ul>
+            <list></list>
+            <list></list>
+            <list></list>
+        </ul> -->
+
+        <table>
+            <tbody>
+                <!-- 使用 is = "" 解决 table，ul，select 等可能出现的元素错位问题
+                <list></list>
+                <list></list>
+                <list></list> -->
+
+                <tr is="list"></tr>
+                <tr is="list"></tr>
+                <tr is="list"></tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <script>
+
+        Vue.component("list", {
+            template: "<tr><td>{{content}}</td></tr>",
+
+            /* 除了根组件外的 data 的值均为一个返回对象的函数 */
+            data: function () {
+                return {
+                    content: "hello world"
+                }
+            }
+        })
+
+        var vm = new Vue({
+            el: "#app",
+        })
+    </script>
+
+</body>
+
+</html>

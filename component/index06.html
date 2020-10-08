@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>template</title>
+    <script src="../vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!--
+        为子组件增加自定义事件，可通过父组件监听，子组件触发的形式实现
+        也可以用原生事件直接实现
+    -->
+        <child @click.native="clk"></child>
+
+        <kid @ck="clk"></kid>
+    </div>
+
+
+    <script>
+        Vue.component(
+            "child", {
+            template: "<div> Child </div>",
+        })
+
+        Vue.component(
+            "kid", {
+            template: "<div @click='handlerClickKid'> Kid </div>",
+            methods: {
+                handlerClickKid: function () {
+                    alert("触发事件");
+                    this.$emit("ck");
+                }
+            }
+        })
+
+        var vm = new Vue({
+            el: "#app",
+            methods: {
+                clk: function () {
+                    alert("原生事件")
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

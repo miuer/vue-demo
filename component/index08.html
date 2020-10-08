@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index-08</title>
+    <script src="../vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <child :message=[1,2,3,4,7]></child>
+
+
+        <kid :message=[7,7,7]>
+            <template slot-scope="items">
+                <h1>
+                    {{items.item}}
+                </h1>
+            </template>
+        </kid>
+    </div>
+
+
+    <script>
+        Vue.component(
+            "child", {
+            props: ["message"],
+            data: function () {
+                return {
+                    list: this.message,
+                }
+            },
+            template:
+                `<div>
+                    <ul v-for ="item of list" >
+                        <li>{{item}}</li>
+                    </ul>
+                </div>`
+        })
+
+        Vue.component(
+            "kid", {
+            props: ["message"],
+
+            data: function () {
+                return {
+                    items: this.message,
+                }
+            },
+            template:
+                `<div>
+                    <ul>
+                        <slot
+                            v-for= "item of items"
+                            :item= item
+                        ></slot>
+
+                    </ul>
+                </div>`
+        })
+
+        var vm = new Vue({
+            el: "#app",
+
+        })
+    </script>
+
+</body>
+
+</html>

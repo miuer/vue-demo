@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>template</title>
+    <script src="../vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <child>
+            <!--
+                使用插槽向子组件中增添内容
+                具名插槽不可被通用实现
+                一个组件只能有一个通用插槽，但可以有多个具名插槽
+            -->
+            <!-- <div slot="header">Header</div> -->
+            <div slot="footer">Footer</div>
+        </child>
+
+    </div>
+
+    <script>
+        Vue.component(
+            "child", {
+            data: function () {
+                return {
+                    message: "hello world",
+                }
+            },
+            template: `<div>
+                            <slot name="header"> <h1>Default header </h1></slot>
+                           {{message}}
+                           <slot name="footer"></slot>
+                       </div>`
+        }
+        )
+
+        var vm = new Vue({
+            el: "#app",
+        })
+    </script>
+
+</body>
+
+</html>

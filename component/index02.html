@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index-02</title>
+    <script src="../vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- 通过 ref 可以直接获取 dom对象或是组件引用，从而进行修改，如动画等 -->
+
+        <div ref="hello" v-on:click="handlerHello">{{message}}</div>
+
+        <count ref="one" @change="sum"></count>
+        <count ref="two" @change="sum"></count>
+
+        <div>total: {{total}}</div>
+    </div>
+
+
+    <script>
+
+        Vue.component("count",
+            {
+                template: "<div @click='handlerClick'>{{count}}</div>",
+                data: function () {
+                    return {
+                        count: 0,
+                    }
+                },
+                methods: {
+                    handlerClick: function () {
+                        this.count++;
+                        this.$emit("change");
+                    }
+                }
+
+            })
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                message: "hello world",
+                total: 0,
+            },
+            methods: {
+                sum: function () {
+                    this.total = this.$refs.one.count + this.$refs.two.count;
+                },
+
+
+                handlerHello: function () {
+                    alert(this.$refs.hello.innerHTML)
+                }
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>

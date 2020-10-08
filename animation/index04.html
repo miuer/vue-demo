@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>js动画</title>
+    <script src="../vue/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/2.0.6/velocity.min.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- 
+            @before-enter=""
+            @enter=""
+            @after-enter=""
+            @enter-cancelled=""
+            @before-leave=""
+            @leave=""
+            @after-leave=""
+            @leave-cancelled="" 
+        -->
+      <transition
+        name="fade"
+        @before-enter="handlerBeforlEnter"
+        @enter="handlerEnter"
+        @after-enter="handlerAfterEnter"
+      >
+        <child v-if="show">hello wolrd</child>
+      </transition>
+      <button @click="handlerBtnClick">Animation</button>
+    </div>
+
+    <script>
+      Vue.component("child", {
+        template: `<div>hello wolrd</div>`,
+      });
+
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          show: true,
+        },
+        methods: {
+          handlerBtnClick: function () {
+            this.show = !this.show;
+          },
+          handlerBeforlEnter: function (el) {
+            el.style.color = "red";
+            el.style.opacity = 0;
+          },
+          handlerEnter: function (el, done) {
+            // setTimeout(
+            //     () => {
+            //         el.style.color = "green"
+            //     }, 2000
+            // )
+
+            // setTimeout(() => { done() }, 4000)
+
+            // Velocity(el, {
+            //     opacity: 1
+            // }, {
+            //     duration: 2000,
+            //     complete: done,
+            // }
+            // )
+
+            el.velocity(
+              {
+                opacity: 1,
+              },
+              {
+                duration: 3000,
+                complete: done,
+              }
+            );
+          },
+          handlerAfterEnter: function (el) {
+            el.style.color = "gray";
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

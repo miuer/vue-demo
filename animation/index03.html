@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>过渡+动画</title>
+    <script src="../vue/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: opacity 1s;
+        }
+
+        .fade-enter,
+        .fade-leave-to {
+            opacity: 0;
+        }
+
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity 2s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+
+        <transition name="fade" :duration="{ enter: 500, leave: 800 }" appear
+            appear-active-class="animate__animated animate__flash"
+            enter-active-class="animate__animated animate__rubberBand fade-enter-active"
+            leave-active-class="animate__animated animate__swing fade-leave-active">
+
+            <child v-if="show">
+            </child>
+        </transition>
+
+
+        <button @click="handlerBtnClick">Animation</button>
+    </div>
+
+
+    <script>
+        Vue.component(
+            "child", {
+            template: `<div>hello wolrd</div>`
+        }
+        )
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                show: true,
+            },
+            methods: {
+                handlerBtnClick: function () {
+                    this.show = !this.show;
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

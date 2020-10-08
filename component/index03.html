@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index-03</title>
+    <script src="../vue/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+
+        <input type="text" v-model="message">
+
+        <p>{{message}}</p>
+
+        <counter v-bind:number="message"></counter>
+
+        <!-- 父组件通过 v-bind 向子组件传递单向数据流
+             子组件通过 v-on 监听子组件事件获取数据流 -->
+        <counter :number="2" @inc="handlerInc"></counter>
+        <counter :number="3" @inc="handlerInc"></counter>
+
+        <div>counter total:{{total}}</div>
+
+    </div>
+
+
+    <script>
+        // 如果需要对来自父组件的数据进行修改，则需要在子组件创建 data 拷贝数据流
+        // 但是这样会造成父组件的数据流只能传递一次，见 15-19， p 中的值会改变，但是 counter 中的不会
+        var count = {
+            // props 既可以是数组，也可以是对象
+            props: ["number"],
+            data: function () {
+                return {
+                    num: this.number,
+                }
+            },
+            template: "<div @click='handlerClick'>{{num}}</div>",
+            methods: {
+                handlerClick: function () {
+                    this.num++;
+                    this.$emit("inc", 1)
+                }
+            }
+        }
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                message: 0,
+                total: 0,
+            },
+            components: {
+                counter: count,
+            },
+            methods: {
+                handlerInc: function (step) {
+                    this.total += step
+                }
+            }
+        })
+
+
+    </script>
+
+</body>
+
+</html>
